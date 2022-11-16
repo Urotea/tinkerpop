@@ -41,6 +41,7 @@ type DriverRemoteConnectionSettings struct {
 	KeepAliveInterval time.Duration
 	WriteDeadline     time.Duration
 	ConnectionTimeout time.Duration
+	Proxy             ProxyFunc
 	EnableCompression bool
 	ReadBufferSize    int
 	WriteBufferSize   int
@@ -81,6 +82,7 @@ func NewDriverRemoteConnection(
 		KeepAliveInterval: keepAliveIntervalDefault,
 		WriteDeadline:     writeDeadlineDefault,
 		ConnectionTimeout: connectionTimeoutDefault,
+		Proxy:             nil,
 		EnableCompression: false,
 		// ReadBufferSize and WriteBufferSize specify I/O buffer sizes in bytes. The default is 1048576.
 		// If a buffer size is set zero, then the Gorilla websocket 4096 default size is used. The I/O buffer
@@ -102,6 +104,7 @@ func NewDriverRemoteConnection(
 		keepAliveInterval: settings.KeepAliveInterval,
 		writeDeadline:     settings.WriteDeadline,
 		connectionTimeout: settings.ConnectionTimeout,
+		proxy:             settings.Proxy,
 		enableCompression: settings.EnableCompression,
 		readBufferSize:    settings.ReadBufferSize,
 		writeBufferSize:   settings.WriteBufferSize,
