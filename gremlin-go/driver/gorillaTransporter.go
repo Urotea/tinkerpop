@@ -57,8 +57,13 @@ func (transporter *gorillaTransporter) Connect() (err error) {
 		return
 	}
 
+	proxy := transporter.connSettings.proxy
+	if proxy == nil {
+		proxy = http.ProxyFromEnvironment
+	}
+
 	dialer := &websocket.Dialer{
-		Proxy:             http.ProxyFromEnvironment,
+		Proxy:             proxy,
 		HandshakeTimeout:  transporter.connSettings.connectionTimeout,
 		TLSClientConfig:   transporter.connSettings.tlsConfig,
 		EnableCompression: transporter.connSettings.enableCompression,

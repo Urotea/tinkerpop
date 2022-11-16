@@ -21,6 +21,8 @@ package gremlingo
 
 import (
 	"crypto/tls"
+	"net/http"
+	"net/url"
 	"sync"
 	"time"
 )
@@ -41,12 +43,15 @@ type connection struct {
 	state      connectionState
 }
 
+type ProxyFunc func(*http.Request) (*url.URL, error)
+
 type connectionSettings struct {
 	authInfo          *AuthInfo
 	tlsConfig         *tls.Config
 	keepAliveInterval time.Duration
 	writeDeadline     time.Duration
 	connectionTimeout time.Duration
+	proxy             ProxyFunc
 	enableCompression bool
 	readBufferSize    int
 	writeBufferSize   int

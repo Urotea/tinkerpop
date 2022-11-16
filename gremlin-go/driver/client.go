@@ -38,6 +38,7 @@ type ClientSettings struct {
 	KeepAliveInterval time.Duration
 	WriteDeadline     time.Duration
 	ConnectionTimeout time.Duration
+	Proxy             ProxyFunc
 	EnableCompression bool
 	ReadBufferSize    int
 	WriteBufferSize   int
@@ -75,6 +76,7 @@ func NewClient(url string, configurations ...func(settings *ClientSettings)) (*C
 		KeepAliveInterval: keepAliveIntervalDefault,
 		WriteDeadline:     writeDeadlineDefault,
 		ConnectionTimeout: connectionTimeoutDefault,
+		Proxy:             nil,
 		EnableCompression: false,
 		// ReadBufferSize and WriteBufferSize specify I/O buffer sizes in bytes. If a buffer
 		// size is zero, then a useful default size is used. The I/O buffer sizes
@@ -96,6 +98,7 @@ func NewClient(url string, configurations ...func(settings *ClientSettings)) (*C
 		keepAliveInterval: settings.KeepAliveInterval,
 		writeDeadline:     settings.WriteDeadline,
 		connectionTimeout: settings.ConnectionTimeout,
+		proxy:             settings.Proxy,
 		enableCompression: settings.EnableCompression,
 		readBufferSize:    settings.ReadBufferSize,
 		writeBufferSize:   settings.WriteBufferSize,
